@@ -28,25 +28,6 @@ Expense-Tracker
 
 ---
 
-## How to Run Locally
-
-1. Clone or download this repository.
-2. Open `indexET.html` in any modern web browser.  
-   No server, build step, or dependencies required.
-
----
-
-## Deployment (GitHub Pages)
-
-1. Go to the repository on GitHub.
-2. Click **Settings** → **Pages**.
-3. Under **Source**, select **Branch: main** and folder **/ (root)**.
-4. Click **Save**.
-5. After a few moments your site will be live at:  
-https://your-username.github.io/Expense_tracker2/
-
----
-
 ##Challenges Faced
 1. Managing dynamic UI updates
 2. Implementing real-time charts
