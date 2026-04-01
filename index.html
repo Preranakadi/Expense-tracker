@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense Tracker | Dashboard</title>
+  <meta name="description" content="Track your income and expenses with a modern, beautiful dashboard." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+
+  <!-- ===== TOP NAV ===== -->
+  <nav class="top-nav" id="top-nav">
+    <div class="nav-brand">
+      <span class="brand-name">Expense Tracker</span>
+    </div>
+    <div class="nav-actions">
+      <div class="nav-icons">
+        <button class="icon-btn" id="btn-notifications" title="Notifications">
+          <span class="material-symbols-outlined">notifications</span>
+        </button>
+        <button class="icon-btn" id="btn-dark-mode" title="Toggle dark mode">
+          <span class="material-symbols-outlined">dark_mode</span>
+        </button>
+      </div>
+      <div class="nav-user">
+        <div class="user-info">
+          <span class="user-tier">Premium Tier</span>
+          <span class="user-name">Alex Sterling</span>
+        </div>
+        <div class="user-avatar">
+          <div class="avatar-placeholder">AS</div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-border-bottom"></div>
+  </nav>
+
+  <div class="layout-wrapper">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar" id="sidebar">
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-link nav-link--active" id="nav-dashboard">
+          <span class="material-symbols-outlined">dashboard</span>
+          Dashboard
+        </a>
+        <a href="#" class="nav-link" id="nav-transactions">
+          <span class="material-symbols-outlined">receipt_long</span>
+          Transactions
+        </a>
+        <a href="#" class="nav-link" id="nav-categories">
+          <span class="material-symbols-outlined">category</span>
+          Categories
+        </a>
+        <a href="#" class="nav-link" id="nav-reports">
+          <span class="material-symbols-outlined">insert_chart</span>
+          Reports
+        </a>
+        <a href="#" class="nav-link" id="nav-settings">
+          <span class="material-symbols-outlined">settings</span>
+          Settings
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="add-transaction-btn" id="btn-add-transaction-sidebar">
+          <span class="material-symbols-outlined">add</span>
+          Add Transaction
+        </button>
+        <div class="project-widget">
+          <p class="project-widget__label">Active Project</p>
+          <p class="project-widget__name">Project Alpha</p>
+          <div class="project-progress-bar">
+            <div class="project-progress-fill" style="width: 75%;"></div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content">
+
+      <!-- Summary Cards -->
+      <section class="summary-grid" aria-label="Financial Summary">
+
+        <div class="summary-card summary-card--balance" tabindex="0">
+          <div class="summary-card__header">
+            <span class="summary-card__label">Total Balance</span>
+            <div class="summary-card__icon summary-card__icon--primary">
+              <span class="material-symbols-outlined">wallet</span>
+            </div>
+          </div>
+          <div class="summary-card__value" id="balance">₹0.00</div>
+          <div class="summary-card__meta meta--primary">
+            <span class="material-symbols-outlined">trending_up</span>
+            <span id="balance-meta">Track your transactions</span>
+          </div>
+          <div class="summary-card__bg-icon">
+            <span class="material-symbols-outlined">account_balance_wallet</span>
+          </div>
+        </div>
+
+        <div class="summary-card" tabindex="0">
+          <div class="summary-card__header">
+            <span class="summary-card__label">Total Income</span>
+            <div class="summary-card__icon summary-card__icon--green">
+              <span class="material-symbols-outlined">arrow_downward</span>
+            </div>
+          </div>
+          <div class="summary-card__value" id="total-income">₹0.00</div>
+          <div class="summary-card__meta meta--green">
+            <span class="material-symbols-outlined">check_circle</span>
+            <span>Verified deposits</span>
+          </div>
+        </div>
+
+        <div class="summary-card" tabindex="0">
+          <div class="summary-card__header">
+            <span class="summary-card__label">Total Expenses</span>
+            <div class="summary-card__icon summary-card__icon--tertiary">
+              <span class="material-symbols-outlined">arrow_upward</span>
+            </div>
+          </div>
+          <div class="summary-card__value" id="total-expenses">₹0.00</div>
+          <div class="summary-card__meta meta--tertiary">
+            <span class="material-symbols-outlined">warning</span>
+            <span id="expense-meta">No expenses yet</span>
+          </div>
+        </div>
+
+        <div class="summary-card" tabindex="0">
+          <div class="summary-card__header">
+            <span class="summary-card__label">Savings</span>
+            <div class="summary-card__icon summary-card__icon--savings">
+              <span class="material-symbols-outlined">savings</span>
+            </div>
+          </div>
+          <div class="summary-card__value" id="savings">₹0.00</div>
+          <div class="summary-card__meta meta--primary">
+            <span class="material-symbols-outlined">rocket_launch</span>
+            <span>Goal: ₹5,000.00</span>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Charts Section -->
+      <section class="charts-grid" aria-label="Visual Analytics">
+
+        <!-- Line Chart -->
+        <div class="chart-card chart-card--wide">
+          <div class="chart-card__header">
+            <div>
+              <h2 class="chart-card__title">Income vs Spending</h2>
+              <p class="chart-card__subtitle">Smooth curve multi-series visualization</p>
+            </div>
+            <div class="chart-legend">
+              <div class="legend-item">
+                <span class="legend-dot legend-dot--primary"></span>
+                <span class="legend-label">Income</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot legend-dot--tertiary"></span>
+                <span class="legend-label">Spending</span>
+              </div>
+            </div>
+          </div>
+          <div class="chart-area">
+            <canvas id="line-chart" width="800" height="240" aria-label="Income vs Spending line chart"></canvas>
+          </div>
+          <div class="chart-months">
+            <span>Jan</span><span>Feb</span><span>Mar</span>
+            <span>Apr</span><span>May</span><span>Jun</span><span>Jul</span>
+          </div>
+        </div>
+
+        <!-- Donut Chart -->
+        <div class="chart-card chart-card--donut">
+          <h2 class="chart-card__title">Spending by Category</h2>
+          <p class="chart-card__subtitle">Distribution overview</p>
+          <div class="donut-wrapper">
+            <canvas id="donut-chart" width="192" height="192" aria-label="Spending category donut chart"></canvas>
+            <div class="donut-center" id="donut-center">
+              <span class="donut-total" id="donut-value">₹0</span>
+              <span class="donut-label">Total</span>
+            </div>
+          </div>
+          <div class="donut-legend" id="donut-legend">
+            <div class="donut-legend-item">
+              <span class="legend-dot" style="background:#adc6ff;"></span>
+              <span class="donut-legend-label">Rent 45%</span>
+            </div>
+            <div class="donut-legend-item">
+              <span class="legend-dot" style="background:#ffb786;"></span>
+              <span class="donut-legend-label">Food 25%</span>
+            </div>
+            <div class="donut-legend-item">
+              <span class="legend-dot" style="background:#b1c6f9;"></span>
+              <span class="donut-legend-label">Travel 20%</span>
+            </div>
+            <div class="donut-legend-item">
+              <span class="legend-dot" style="background:#424754;"></span>
+              <span class="donut-legend-label">Misc 10%</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Form + Table Section -->
+      <section class="form-table-grid" aria-label="Transactions">
+
+        <!-- New Entry Form -->
+        <div class="glass-panel new-entry-panel">
+          <h2 class="panel-title">New Entry</h2>
+          <form id="transaction-form" novalidate class="entry-form">
+
+            <div class="form-group">
+              <label class="form-label" for="amount">Amount (₹)</label>
+              <input type="number" id="amount" class="form-input" placeholder="0.00" min="0.01" step="0.01" required />
+              <span class="form-error" id="err-amount">Please enter a valid amount greater than 0</span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="category">Category</label>
+                <div class="select-wrapper">
+                  <select id="category" class="form-input form-select" required>
+                    <option value="" disabled selected>Select</option>
+                    <optgroup label="Income">
+                      <option value="Salary">Salary</option>
+                      <option value="Freelance">Freelance</option>
+                      <option value="Investment">Investment</option>
+                      <option value="Gift">Gift</option>
+                      <option value="Other Income">Other Income</option>
+                    </optgroup>
+                    <optgroup label="Expenses">
+                      <option value="Food">Food</option>
+                      <option value="Transport">Transport</option>
+                      <option value="Housing">Housing</option>
+                      <option value="Healthcare">Healthcare</option>
+                      <option value="Entertainment">Entertainment</option>
+                      <option value="Shopping">Shopping</option>
+                      <option value="Education">Education</option>
+                      <option value="Utilities">Utilities</option>
+                      <option value="Other Expense">Other Expense</option>
+                    </optgroup>
+                    <optgroup label="Savings">
+                      <option value="Emergency Fund">Emergency Fund</option>
+                      <option value="Goal Savings">Goal Savings</option>
+                      <option value="Investment Fund">Investment Fund</option>
+                      <option value="Retirement Fund">Retirement Fund</option>
+                      <option value="Other Savings">Other Savings</option>
+                    </optgroup>
+                  </select>
+                </div>
+                <span class="form-error" id="err-category">Please select a category</span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Type</label>
+                <div class="type-toggle" style="grid-template-columns:repeat(3,1fr);">
+                  <button type="button" id="btn-income" class="type-btn type-btn--active">Income</button>
+                  <button type="button" id="btn-expense" class="type-btn">Expense</button>
+                  <button type="button" id="btn-savings" class="type-btn">Savings</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="notes">Notes</label>
+              <textarea id="notes" class="form-input form-textarea" placeholder="Description of the transaction..."
+                rows="3"></textarea>
+            </div>
+
+            <div id="form-feedback"></div>
+
+            <button type="submit" class="confirm-btn" id="submit-btn">
+              Confirm Entry
+            </button>
+
+          </form>
+        </div>
+
+        <!-- Transaction History -->
+        <div class="table-panel">
+          <div class="table-panel__header">
+            <h2 class="panel-title" style="margin-bottom: 0;">Recent Activity</h2>
+            <div class="table-search-row">
+              <div class="search-wrapper">
+                <span class="material-symbols-outlined search-icon">search</span>
+                <input type="text" id="search-input" class="search-input" placeholder="Search..." />
+              </div>
+              <button class="filter-btn" id="filter-btn" title="Filter">
+                <span class="material-symbols-outlined">filter_list</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="tx-table" aria-label="Transaction history">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Merchant / Entity</th>
+                  <th>Category</th>
+                  <th class="text-right">Amount</th>
+                  <th class="text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody id="transaction-table-body">
+                <!-- Rows injected by JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-panel__footer">
+            <button class="view-history-btn" id="btn-view-history">
+              View Detailed History
+              <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-brand__name">Expense Tracker</span>
+        <p class="footer-brand__desc">Track your income and expenses with ease using a modern, beautiful dashboard.</p>
+      </div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="#" class="footer-link">System Status</a>
+        <a href="#" class="footer-link">Documentation</a>
+        <a href="#" class="footer-link">API Docs</a>
+        <a href="#" class="footer-link">Support</a>
+      </nav>
+    </div>
+    <p class="footer-copy">© 2024 Project Alpha. Built with Precision Depth.</p>
+  </footer>
+
+  <!-- ===== SIDEBAR NAV MODAL ===== -->
+  <div class="snav-overlay" id="snav-overlay" aria-hidden="true">
+    <div class="snav-modal" id="snav-modal" role="dialog" aria-modal="true">
+      <div class="snav-modal__header">
+        <h2 class="snav-modal__title" id="snav-modal-title">Modal</h2>
+        <button class="snav-modal__close" id="snav-modal-close" aria-label="Close">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div class="snav-modal__body" id="snav-modal-body">
+        <!-- Dynamic content injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
