@@ -28,7 +28,7 @@ Expense-Tracker
 
 ---
 
-##Challenges Faced
+##Challenges
 1. Managing dynamic UI updates
 2. Implementing real-time charts
 3. Handling event listeners for dynamic elements
